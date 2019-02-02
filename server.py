@@ -1,6 +1,7 @@
 """Simple HTTP Server With Upload.
 This module builds on BaseHTTPServer by implementing the standard GET
 and HEAD requests in a fairly straightforward manner.
+https://gist.github.com/UniIsland/3346170
 """
 
 
@@ -10,6 +11,7 @@ __author__ = "virtualadam"
 __home_page__ = "blank"
 
 import os
+import inspect
 import posixpath
 import BaseHTTPServer
 import urllib
@@ -17,6 +19,7 @@ import cgi
 import shutil
 import mimetypes
 import re
+from os.path import basename
 try:
     from cStringIO import StringIO
 except ImportError:
@@ -88,7 +91,9 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         fn = re.findall(r'Content-Disposition.*name="file"; filename="(.*)"', line)
         if not fn:
             return (False, "Can't find out file name...")
-        path = self.translate_path(self.path)
+        if not os.path.exists('data'):
+                os.makedirs('data')                
+        path = self.translate_path(self.path)+'/data'
         fn = os.path.join(path, fn[0])
         line = self.rfile.readline()
         remainbytes -= len(line)
