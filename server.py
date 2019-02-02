@@ -11,7 +11,6 @@ __author__ = "virtualadam"
 __home_page__ = "blank"
 
 import os
-import inspect
 import posixpath
 import BaseHTTPServer
 import urllib
@@ -19,7 +18,6 @@ import cgi
 import shutil
 import mimetypes
 import re
-from os.path import basename
 try:
     from cStringIO import StringIO
 except ImportError:
